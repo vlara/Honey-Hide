@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="com.vlara.honeyhide"
+      android:versionCode="1"
+      android:versionName="1.0">
+    <application android:icon="@drawable/icon" >
+        <receiver android:name=".HoneyHideWidget" android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+				<action android:name="com.vlara.honeyhide.HoneyHideWidget.ACTION_WIDGET_RECEIVER"/>
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/button_widget_provider" />
+        </receiver>
+    </application>
+    <uses-sdk android:minSdkVersion="11" />
+</manifest> 

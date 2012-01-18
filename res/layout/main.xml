@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relativeLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="0.01" android:background="@drawable/appwidget_dark_bg">
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/show"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_weight="0.01"
+        android:text="Honey Hide"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@+id/hide"
+        android:layout_width="wrap_content"
+        android:layout_height="30dip"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/textView1"
+        android:layout_marginRight="60dp"
+        android:layout_marginTop="23dp"
+        android:layout_weight="0.01"
+        android:text="Hide" />
+
+    <Button
+        android:id="@+id/show"
+        android:layout_width="wrap_content"
+        android:layout_height="30dip"
+        android:layout_alignBaseline="@+id/hide"
+        android:layout_alignBottom="@+id/hide"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_marginLeft="56dp"
+        android:layout_weight="0.01"
+        android:text="Show" />
+
+</RelativeLayout>
