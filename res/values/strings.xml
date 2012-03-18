@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">HoneyHide</string>
+    <string name="app_name">Honey Hide</string>
     <string name="SystemBar">System Bar</string>
+    <string name="renable">Re-Enable status bar on screen off</string>
+    <string name="reenableKey">reenableKey</string>
+    <string name="toggle">Toggle Bar</string>
 </resources>

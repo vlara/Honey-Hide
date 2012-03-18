@@ -5,12 +5,15 @@ import java.io.IOException;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
+import com.vlara.honeyhide.donate.R;
 
 public class HoneyHideWidget extends AppWidgetProvider {
 
@@ -18,21 +21,14 @@ public class HoneyHideWidget extends AppWidgetProvider {
     public static final String PREFS_NAME = "HoneyHideSettings";
     public boolean hidden;
 
-
-    /*
-     * Reset hidden boolean Value to False whenever the widget is created(e.g on restart)
-     */
-    @Override
-    public void onEnabled(Context context) {
-        SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, 0);
-        hidden = settings.getBoolean("hidden", false);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putBoolean("hidden", hidden);
-        editor.commit();
-    }
-
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+    	Log.e("honey", "IN ON UPDATE");
+    	IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
+        filter.addAction(Intent.ACTION_SCREEN_OFF);
+    	BroadcastReceiver mReceiver = new ScreenReceiver();
+    	context.getApplicationContext().registerReceiver(mReceiver, filter);
+    	
         SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, 0);
         hidden = settings.getBoolean("hidden", false);
 
@@ -51,6 +47,7 @@ public class HoneyHideWidget extends AppWidgetProvider {
         SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, 0);
         hidden = settings.getBoolean("hidden", false);
         SharedPreferences.Editor editor = settings.edit();
+        
         if (intent.getAction().equals(ACTION_WIDGET_RECEIVER)) {
             if (hidden) {
                 Toast.makeText(context, "Showing " + context.getString(R.string.SystemBar), Toast.LENGTH_SHORT).show();
@@ -63,7 +60,6 @@ public class HoneyHideWidget extends AppWidgetProvider {
             editor.putBoolean("hidden", !hidden);
             editor.commit();
         }
-
         super.onReceive(context, intent);
     }
 
@@ -71,7 +67,7 @@ public class HoneyHideWidget extends AppWidgetProvider {
         Thread t = new Thread(new Runnable() {
             public void run() {
                 try {
-                    Log.d("OFF", "Turning ON");
+                    Log.e("honey", "Turning ON");
                     Process proc = Runtime.getRuntime().exec(new String[]{
                             "am","startservice","-n","com.android.systemui/.SystemUIService"});
                     proc.waitFor();
@@ -88,7 +84,7 @@ public class HoneyHideWidget extends AppWidgetProvider {
         Thread t = new Thread(new Runnable() {
             public void run() {
                 try {
-                    Log.d("OFF", "Turning OFF");
+                    Log.e("honey", "Turning OFF");
                     Process proc = Runtime.getRuntime().exec(new String[]{
                             "su","-c","service call activity 79 s16 com.android.systemui"});
                     proc.waitFor();
